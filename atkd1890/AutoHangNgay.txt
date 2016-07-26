@@ -1,0 +1,6 @@
+﻿FirstLine
+ThầnNam
+Tay
+sl
+Nhẫn
+EOF

@@ -1,0 +1,104 @@
+local tbAuctionRoom = Ui(Ui.UI_AUCTIONROOM)
+local ITEM_BAR_STR = "Bar_";
+local ITEM_OBJOBJ_STR = "_ObjItem";
+local ITEM_NAME_STR = "_TxtItemName";
+local ITEM_SELLERNAME_STR = "_TxtSellerName";
+local ITEM_SELLERTIME_STR = "_TxtSellerTime";
+local ITEM_PRICE_STR = "_TxtPrice";
+local ITEM_ONEPRICE_STR = "_TxtOnePrice";
+local ITEM_COIN_STR = "_TxtCoin"
+local ITEM_STAR_STR = "_TxtStar";
+local ITEM_SEND	= "_BtnSend";
+local BTN_SHOWPRICE	= "BtnItemPrice";
+local BROWSE_ITEMLIST_NAME = "BGList"
+local BUYING_ITEMLIST_NAME = "BuyingGList"
+local SELL_ITEMLIST_NAME = "SellGList"
+local nMoneyType = 0
+
+local tbAuctionRoom_UpdItmLst = tbAuctionRoom_UpdItmLst or tbAuctionRoom.UpdateItemList
+function tbAuctionRoom:UpdateItemList(szListName, bSpecial)
+	local nItemCountPerPage = KAuction.AuctionGetSearchResultNum() - 1;
+	for nItemBarIdx = 0, nItemCountPerPage do
+		local rec = KAuction.AuctionGetSearchResultByIndex(nItemBarIdx);
+		if ( rec ~= nil ) then
+			local nItemIdx		= rec.GetItemIndex()
+			local nOnePrice		= rec.GetOneTimeBuyPrice()/10000
+			local nCurrency		= rec.GetCurrency()
+			local szUnit		= ""
+			if nCurrency == 1 then
+				szUnit = "bạc"
+			end
+			local pItem = KItem.GetItemObj(nItemIdx)
+			if pItem then
+			end
+		end
+	end
+	tbAuctionRoom_UpdItmLst(self, szListName, bSpecial)
+end
+
+function tbAuctionRoom:UpdateItemBar(szListName, nItemIdx, szSellName, szSellTime, nPrice, nOnePrice, nItemBarIdx, nCurrency, bSpecial)
+	local szBarName	= szListName..ITEM_BAR_STR..nItemBarIdx;
+	local objItemObj = szBarName..ITEM_OBJOBJ_STR;	
+	local txtItemName = szBarName..ITEM_NAME_STR;
+	local txtSellerName = szBarName..ITEM_SELLERNAME_STR;
+	local txtSellerTime = szBarName..ITEM_SELLERTIME_STR;
+	local txtPrice = szBarName..ITEM_PRICE_STR;
+	local txtOnePrice = szBarName..ITEM_ONEPRICE_STR;	
+	local txtCoin = szBarName .. ITEM_COIN_STR;	
+	local txtStar = szBarName..ITEM_STAR_STR;	
+	local btnSend = szBarName..ITEM_SEND;
+	local nAvgPrice = nPrice;
+	local nAvgOnePrice = nOnePrice;
+	local pItem = KItem.GetItemObj(nItemIdx);	
+	local tbObj = nil;
+	if (pItem) then
+		nAvgPrice = math.ceil(nPrice * 100 / pItem.nCount) / 100;
+		nAvgOnePrice = math.ceil(nOnePrice * 100 / pItem.nCount) / 100;
+		tbObj = {};
+		tbObj.nType = Ui.OBJ_ITEM;
+		tbObj.pItem = pItem;
+		Txt_SetTxt(self.UIGROUP, txtStar, (pItem.nStarLevel/2).."★" );
+		Txt_SetTxt(self.UIGROUP, txtItemName, pItem.szName);			
+		self.tbListBarViewGood[szListName][nItemBarIdx]:SetObj(tbObj);
+	end
+	TxtEx_SetText(self.UIGROUP, txtSellerName, "<a=infor:"..szSellName..">"..szSellName.."<a>");
+	Wnd_Show(self.UIGROUP, btnSend);
+	local hTime = math.floor(szSellTime/60/60);
+	if (hTime > 0) then
+		Txt_SetTxt(self.UIGROUP, txtSellerTime, "Còn "..hTime.."h")
+	else
+		local mTime = math.floor(szSellTime/60)
+		if (mTime > 4) then
+			Txt_SetTxt(self.UIGROUP, txtSellerTime, "<color=yellow>Còn "..mTime.."m<color>")
+		else
+			local sTime = math.floor(szSellTime)
+			if (sTime > 0) then
+				Txt_SetTxt(self.UIGROUP, txtSellerTime, "<color=red>Còn "..sTime.."s<color>")
+			end
+		end
+	end
+	
+	if (Btn_GetCheck(self.UIGROUP, BTN_SHOWPRICE) == 1 and szListName == BROWSE_ITEMLIST_NAME) or bSpecial then
+		if (nMoneyType == 0) then
+			if nCurrency and nCurrency == 2 then
+				Txt_SetTxt(self.UIGROUP, txtCoin,  "Giá: <color=yellow>"..Item:FormatMoney(nAvgOnePrice).."Đồng<color>");
+				Wnd_SetEnable(self.UIGROUP, btnSend, 0);
+			else
+				Txt_SetTxt(self.UIGROUP, txtOnePrice, "Định mức đến: <color=orange>"..Item:FormatMoney(nAvgOnePrice).."Bạc<color>");
+				Txt_SetTxt(self.UIGROUP, txtPrice, "Định mức từ: <color=orange>"..Item:FormatMoney(nAvgPrice).."Bạc<color>");
+				Wnd_SetEnable(self.UIGROUP, btnSend, 1);
+			end
+		end
+	else
+		if (nMoneyType == 0) then
+			if nCurrency and nCurrency == 2 then
+				Txt_SetTxt(self.UIGROUP, txtCoin,  "Giá: <color=yellow>"..Item:FormatMoney(nOnePrice).."Đồng<color>");
+				Wnd_SetEnable(self.UIGROUP, btnSend, 0);
+			else
+				Txt_SetTxt(self.UIGROUP, txtOnePrice, "Đơn giá đến: <color=orange>"..Item:FormatMoney(nOnePrice).."Bạc<color>");
+				Txt_SetTxt(self.UIGROUP, txtPrice, "Đơn giá từ: <color=orange>"..Item:FormatMoney(nPrice).."Bạc<color>");
+				Wnd_SetEnable(self.UIGROUP, btnSend, 1);
+			end
+		end
+	end
+end

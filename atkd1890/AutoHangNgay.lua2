@@ -1,0 +1,187 @@
+local AutoHangNgay = Ui.AutoHangNgay or {};
+
+local tWait, tOnItem, tSay;
+
+local sName;
+
+local bStep;
+
+local pTabFile;
+local nItem, sItem;
+
+function AutoHangNgay:HangNgayInit()
+	UiManager:OpenWindow("UI_INFOBOARD", "AutoHangNgay: Start");
+	pTabFile = KIo.OpenTabFile("\\interface2\\atkd1890\\AutoHangNgay.txt");
+	if (not pTabFile) then
+		UiManager:OpenWindow("UI_INFOBOARD", "AutoHangNgay: no file");
+		return;
+	end
+	sName = nil;
+	AutoHangNgay:ModifySay();
+	tWait = Ui.tbLogic.tbTimer:Register(Env.GAME_FPS * 3,AutoHangNgay.OnWait,self);
+end
+
+function AutoHangNgay:ModifySay()
+	local uiSayPanel	= Ui(Ui.UI_SAYPANEL);
+	AutoHangNgay.Say_bak	= AutoHangNgay.Say_bak or uiSayPanel.OnOpen;	
+	function uiSayPanel:OnOpen(tbParam)
+		AutoHangNgay.Say_bak(uiSayPanel, tbParam);		
+		local function fnOnSay()
+			AutoHangNgay:OnSay(tbParam);
+			return 0;
+		end
+		tSay = Ui.tbLogic.tbTimer:Register(1, fnOnSay);
+	end
+	AutoHangNgay.EnterGame_bak	= AutoHangNgay.EnterGame_bak or Ui.EnterGame;
+	function Ui:EnterGame()
+		AutoHangNgay.EnterGame_bak(Ui);
+	end
+end
+
+function AutoHangNgay:OnWait()
+	if (me.szName ~= "") and me.szName ~= sName and me.GetAccountLockState() ~= 1 then
+		sName = me.szName;
+		UiManager:OpenWindow("UI_INFOBOARD", "AutoHangNgay: ".. sName);
+
+		if ((os.date("*t").wday > 1) and (me.GetTask(2196, 2) == 0)) then
+			me.CallServerScript({"ApplyKinOpenSalary"});
+			me.CallServerScript({"ApplyKinGetSalary"});
+			UiManager:OpenWindow("UI_INFOBOARD", "AutoHangNgay: NhanLuong");
+		end
+
+		bStep = 0;
+		tOnItem = Ui.tbLogic.tbTimer:Register(Env.GAME_FPS * 2,AutoHangNgay.OnTimer,self);
+		UiManager:OpenWindow("UI_INFOBOARD", "AutoHangNgay: VatPham");
+
+		-- sItem = nil;
+		-- nItem = 0;
+		-- local nHeight = pTabFile.GetHeight();
+		-- for j=1, nHeight-1 do
+			-- local sLine = pTabFile.GetStr(j,1);
+			-- if string.find(sName, sLine) then
+				-- sItem = pTabFile.GetStr(j+1,1);							
+				-- break;
+			-- end
+		-- end
+	end
+end
+
+function AutoHangNgay:OnTimer()	
+	if bStep == 0 then -- TNLQ
+		if me.GetItemCountInBags(18,1,20301,1)>0 then
+			local tbFind = me.FindItemInBags(18,1,20301,1);
+			for j, tbItem in pairs(tbFind) do
+				me.UseItem(tbItem.pItem);
+				return;
+			end
+		end	
+		bStep = 1;
+		return;
+	end
+
+	if bStep == 1 then -- Đá 3
+		if me.GetItemCountInBags(18,1,20382,3)>0 then
+			local tbFind = me.FindItemInBags(18,1,20382,3);
+			for j, tbItem in pairs(tbFind) do
+				me.UseItem(tbItem.pItem);
+				return;
+			end
+		end
+		AutoHangNgay:HangNgayOff();
+	end
+
+
+	
+	--if (nItem < 5) then
+	--	for i=1, 2 do
+	--		if me.GetItemCountInBags(18,1,20448,i)>0 then
+	--			local tbFind = me.FindItemInBags(18,1,20448,i);
+	--			for j, tbItem in pairs(tbFind) do
+	--				me.UseItem(tbItem.pItem);
+	--				return;
+	--			end
+	--		end
+	--	end
+	--	for i=1, 10 do
+	--		if me.GetItemCountInBags(18,1,20450,i)>0 then
+	--			local tbFind = me.FindItemInBags(18,1,20450,i);
+	--			for j, tbItem in pairs(tbFind) do
+	--				me.UseItem(tbItem.pItem);
+	--				return;
+	--			end
+	--		end
+	--	end
+	--end
+	
+	-- for i=1, 2 do
+	--	if me.GetItemCountInBags(18,1,20426,i)>0 then
+	--		local tbFind = me.FindItemInBags(18,1,20426,i);
+	--		for j, tbItem in pairs(tbFind) do
+	--			me.UseItem(tbItem.pItem);
+	--			return;
+	--		end
+	--	end
+	-- end
+end
+
+function AutoHangNgay:OnSay(tbParam)
+	if (bStep > 1) then
+		return;
+	end
+
+	if (string.find(tbParam[1],"Mỗi ngày chỉ được dùng") or string.find(tbParam[1],"Mỗi ngày được dùng tối đa") or string.find(tbParam[1],"vị trí hiện tại")) then
+		bStep = bStep + 1;
+		UiManager:CloseWindow(Ui.UI_SAYPANEL);
+		return;
+	end
+
+	if string.find(tbParam[1],"ta có thể giúp gì") then
+		for i, szAns in ipairs(tbParam[2]) do
+			if string.find(szAns, "Nhận thưởng") then
+				Ui(Ui.UI_SAYPANEL):OnListSel("LstSelectArray", i);		
+				return;
+			end			
+		end		
+	end
+
+	if string.find(tbParam[1],"Đá 3 cạnh") then
+		for i, szAns in ipairs(tbParam[2]) do
+			if string.find(szAns, "Nhận") then
+				if string.find(szAns, "gray") then
+					UiManager:CloseWindow(Ui.UI_SAYPANEL);
+					AutoHangNgay:HangNgayOff();
+				else
+					Ui(Ui.UI_SAYPANEL):OnListSel("LstSelectArray", i);	
+					UiManager:OpenWindow("UI_INFOBOARD", "AutoHangNgay: Da3");					
+				end
+				return;
+			end			
+		end		
+	end	
+
+	for i, szAns in ipairs(tbParam[2]) do
+		if  string.find(szAns,sItem) then
+			nItem = nItem + 1;
+			Ui(Ui.UI_SAYPANEL):OnListSel("LstSelectArray", i);
+			UiManager:OpenWindow("UI_INFOBOARD", "AutoHangNgay: HTTx"..nItem);
+		end			
+	end		
+end
+
+function AutoHangNgay:HangNgayOff()
+	if (UiManager:WindowVisible(Ui.UI_KIN_GET_SALARY) == 1) then
+		UiManager:CloseWindow(Ui.UI_KIN_GET_SALARY);
+	end
+	
+	if (UiManager:CloseWindow(Ui.UI_JINGHUOFULI) == 1) then
+		UiManager:CloseWindow(Ui.UI_JINGHUOFULI);
+	end
+
+	Ui.tbLogic.tbTimer:Close(tOnItem);
+	tOnItem = 0;
+
+	bStep = 2;
+	UiManager:OpenWindow("UI_INFOBOARD", "AutoHangNgay: Stop");
+end
+
+AutoHangNgay:HangNgayInit();
