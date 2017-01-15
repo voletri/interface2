@@ -643,6 +643,11 @@ if  (string.find(szMsg,"aedasau") or string.find(szMsg,"Anh em đập đá 6 c�
 		Map.tbAutoDiHam:Start_Clock();
 	end	
 	
+	--- nhan luong
+	if  string.find(szMsg,"aenhanluong") and stype=="Đồng Đội" then	
+		me.CallServerScript({"ApplyKinOpenSalary"});
+		me.CallServerScript({"ApplyKinGetSalary"});
+	end
 	
 	--- mo pet
 	local AutoOpenPet_Setting = Ui:GetClass("AutoOpenPet");

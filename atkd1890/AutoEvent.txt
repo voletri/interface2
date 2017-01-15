@@ -1,15 +1,5 @@
-﻿itm	1	18	1	20667	3	30
+﻿itm	1	18	1	20942	9	50
 npc	0	3570	200	50	0	0
 inp	0	0	0	0	0	0
-Phương án
-20 vạn chiến tệ
-Võ Lâm nay đã
-Nhân vật server
-Sự Kiện
-50
-Mở
-Nhẫn
-Chỗ ta
-Chế biến
-Chú Cuội
-Hoạt động
+Sự kiện
+bữa tiệc
