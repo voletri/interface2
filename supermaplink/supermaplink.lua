@@ -146,15 +146,15 @@ end
 
 
 function tbSuperMapLink:OnStartAotoPath()
-	if (me.GetNpc().nIsRideHorse ~= 1 and self.tbUserData.bHorseLock == 1 and me.GetEquip(Item.EQUIPPOS_HORSE)) then
+	if (me.GetNpc().nIsRideHorse ~= 1 and  me.GetEquip(Item.EQUIPPOS_HORSE)) then
 		-- Switch("horse");
 		self:OutF("trying ridehorse...");
 	end
 end
 function tbSuperMapLink:AutoHorse()
-	if (me.GetNpc().nIsRideHorse ~= 1 and self.tbUserData.bHorseLock == 1 and me.GetEquip(Item.EQUIPPOS_HORSE)) then
-		me.Msg("<color=gold>Đua nào")
-		Switch("horse");
+	if (me.GetNpc().nIsRideHorse ~= 1 and me.GetEquip(Item.EQUIPPOS_HORSE)) then
+		--me.Msg("<color=gold>Đua nào")
+	--	Switch("horse");
 		self:OutF("trying ridehorse...");
 	end
 end
@@ -359,9 +359,9 @@ function tbSuperMapLink:nSwitch()
 	self.tbUserData.bHorseLock	= bHorseLock;
 	if (bHorseLock == 1) then
 		me.Msg("Mở tự lên ngựa");
-		--UiManager:OpenWindow("UI_INFOBOARD", "<bclr=red><color=white>¡ùÎÞºÛ¡ùÌáÊ¾:¿ªÆôÑ°Â·×Ô¶¯ÉÏÂí<color>");
+		
 	else
-		--UiManager:OpenWindow("UI_INFOBOARD", "<bclr=blue><color=white>¡ùÎÞºÛ¡ùÌáÊ¾:¹Ø±ÕÑ°Â·×Ô¶¯ÉÏÂí<color>");
+		
 		me.Msg("Đóng tự lên ngựa");
 	end
 end

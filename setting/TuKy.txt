@@ -1,0 +1,13 @@
+--Anh em chú ý nhé, cái %s sẽ thay cho tên đứa mình gọi trong game :D, màu chữ anh em làm tương tự 2 cái dòng kia nhé, thay màu vào tùy a e.Đừng có xóa dòng này :))
+<color=red>%s Mi nghĩ mi là siêu nhân ư <pic=99>?<color>
+<color=blue>%s ơi Chick xã giao 1 tí hem em ^^<color>
+Bớ người thằng %s cứ đòi chick tôi , help me !
+%s nói cho mi biết ta biết làm thơ đấy
+%s xem chưởng của ta đây
+%s mi nghĩ kiếm mi sắc hay là tay ta cứng 
+<color=red>Nghe giang hồ đồn %s là 3D phải hem <pic=99>?<color>
+%s mi ở dưới đất để xem hạ bộ ta phải không,sao không khinh công lên đấu chưởng nào ^^
+<color=red>%s tội nghiệp của mi quá nặng,để ta tiễn mi đi tây thiên trước 1 bước nhé<color>
+%s ngoan ngoan, nằm im .Xong việc ta cho kẹo
+%s mi là siêu nhân ư? Ăn <color=red>Đại Thừa Như Lai Chú cũng tạch<color>
+Ta nói cho %s biết nhé, cảnh giới của võ hiệp chính là khinh công mà vẫn giết người 

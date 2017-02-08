@@ -1,0 +1,29 @@
+
+local tbTimer = Ui.tbLogic.tbTimer;
+Ui.UI_PLAYERNAME_EX = "Ui.UI_PLAYERNAME_EX";
+local uiPlayerNameEx = Ui.tbWnd[UI_PLAYERNAME_EX] or {};
+uiPlayerNameEx.TIMER_FRAME	= Env.GAME_FPS;
+uiPlayerNameEx.nTimerId = 0;
+
+function uiPlayerNameEx:OnInit()
+	self.EnterGame_bak	= self.EnterGame_bak or Ui.EnterGame;
+	function Ui:EnterGame()
+		uiPlayerNameEx.EnterGame_bak(Ui);
+		uiPlayerNameEx.nTimerId = tbTimer:Register(uiPlayerNameEx.TIMER_FRAME, uiPlayerNameEx.OnTimer, uiPlayerNameEx);
+	end
+end
+
+function uiPlayerNameEx:OnTimer()
+	for _, pNpc in ipairs(KNpc.GetAroundNpcList(me, 30)) do
+		local szName = pNpc.szName;
+		if (pNpc.nKind == 1 and not pNpc.GetPlayer()) then
+			local szFact = Ui(Ui.UI_TEAMPORTRAIT):GetFactionShortName(pNpc.nFaction)
+			szName = szName .. string.format("[%s-%d]", szFact, pNpc.nLevel);
+		elseif (pNpc.nKind ~= 1) then
+			szName = szName .. string.format("(%d)", pNpc.nTemplateId);
+		end
+		pNpc.SetDisplayName(szName);
+	end
+end
+
+uiPlayerNameEx:OnInit();

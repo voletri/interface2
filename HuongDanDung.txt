@@ -1,0 +1,89 @@
+Hướng dẫn = video : https://pluginwjx.blogspot.com/p/download.html
+
+* Vào thư mục chứa KT xóa 2 file interface2 + config.ini , sau đó chạy autoupdate.exe ,xong mới cài plugin vào
+* Khi down plugin về các bạn giải nén ra được 2 file interface2 và config.ini . Copy 2 file này vào thư mục chứa KT
+
+Mọi chỉnh sửa trong game phải bằng NOTEPAD++
+
+
+Bảng phím tắt:
+
+PAGE : Bản Tọa Độ + hướng dẫn Plugin
+
+Shift+P: Bảng Báo Hiệu ứng
+Shift+A : Nhặt quả Hoàng Kim
+Shift+B : Bảng Boss
+Shift+D: Đổi năng động
+Shift+F: Theo Sau mua máu với wjxtdauto
+Shift+T : Thương Hội
+Shift+0: Tool CLD
+Shift+Y : Auto làm nhiệm vụ Tông môn(Yêu cầu set tọa độ 2 tông môn khác trong file setting.ini, dùng phím Shift+3 để lấy tọa độ)
+Shift+J: Trồng cây gia tộc (Dùng giải nén file Trongcay.rar chọn extra here...)
+Shift+W: Auto ăn Tinh phách cho pet
+Shift+Q: Auto train Bí bảo
+Shift+S: Nhặt Quả có chạy tọa độ
+Shift+Z: Key chỉ vào NPC  + ấn tổ hợp phím này thì cả team sẽ chọn đối thoại npc đó(Nhận trả nv hiệp khách, nv TQĐ, nv TTT....)
+Shift+L:Clone theo sau BHD Kim long
+
+Shift+1: Bật tool CKP
+Shift+2 : Mua máu cho key(Các bạn phải tự mở shop)
+Shift+3: Tool lấy tọa độ các NPC (Dùng chủ yếu trong Auto làm nhiệm vụ Tông môn) or Alt+1
+Shift+4: Tự động theo sau CTC
+Shift+5: Buff Nga mi cho xe(Tool tộc)
+Shift+6: Tự động săn boss Tần lăng(tool tộc)
+Shift+7: Tắt tool di chuyển map = di hình
+Shift+F1,F2 : Nhiệm vụ Khắc di môn
+Shift+F3,F4: Nhiệm vụ khổng tước Hà
+
+Shift+Alt+F8 : Ăn event 
+Shift+Alt+D: Nhận thưởng trong game
+Shift+Ctrl+B : Bán Rác
+
+
+Ctrl+V: Quay vạn phúc
+Ctrl+R: Mở rương từ xa
+
+Alt+1: Lấy tọa độ trong game
+Alt+3: Bufff Linh Tinh
+Alt+5: Auto pk TM(Tool tộc)
+Alt+8: Set vị trí pet để gọi = lệnh team
+Alt+7: Set vị trí phái để key gọi lệnh chuyển phái
+Alt+B: Buff skill hỗ trợ team......
+Alt+R: Tool mở rương TBD + Bán HT 1-10 + bán tiểu du long
+Alt+T: Tự kỷ (Chỉnh câu đối thoại trong file setting\TuKy.txt)
+Alt+C: Mở bảng chiến tích
+
+Alt+F2: Auto Tanker (Yêu cầu key cũng phải bật, và set khoảng cách trong file setting.ini rồi)
+
+Home: Tool di chuyển nhanh các map = di hình
+
+CHÚ Ý:
+
+*Với WJXTDAUTO
+Các Bạn nên làm 2 bản auto wjxtdauto. 1 bản để hoạt động các hoạt động ingame. 1 bản chuyên pk
+- Với bản chuyên pk các bạn vui lòng vào Xóa những file sau (Có thể gây lỗi cho auto ở 1 số map không hoạt động , nhưng pk tự đánh vẫn thoải mái ^^)
++Vào folder Map trong Auto xóa sạch hết file bên trong.
++Xóa file maplink.ini
+
+*Những File các bạn chỉnh liên quan đến game:
+
+- Tất cả file hầu hết ở interface2\setting
+- UseItem.txt: Add vật phẩm để vào game tự sử dụng
+- SellItem.txt : Add vật phẩm vào danh sách bán rác, khi gọi bán rác sẽ bán
+- Setting.ini : Cài đặt những thứ thông dụng trong game
+- TuKy.txt : Set những câu troll đối thủ, tùy sức sáng tạo
+- interfac2\AutoPK\autoMedicine.lua :  Liên quan đến tự động uống máu
+
+
+Phải set AccKey trong file setting.ini thì mới dùng được các lệnh trong nút Key bảng ĐK
+Set khoảng cách theo sau trong file setting.ini mới dùng được lệnh Tanker: Vd mình có 3 acc clone là : AccClone1, AccClone2,AccClone3 thì vào file
+setting.ini tìm đến đoạn có chữ [Tanker] rồi đánh thêm vào
+
+[Tanker]
+AccClone1=15
+AccClone3=15
+AccClone2=5
+
+
+Lưu ý không được thêm dấu cách linh tinh vào các chỗ trong file setting.ini
+

@@ -1,0 +1,15 @@
+--ID: Đường Môn Name:Lão Lão - Toa Do: 1791 - 3544 --nMapId =Phượng Tường Phủ
+--ID: Thiên Vương Name:Quan Viên Hoàng Thành - Toa Do: 1783 - 3534 --nMapId =Phượng Tường Phủ
+--ID:Cổ Mộ Name:Quan Quân Nhu (nghĩa quân) - Toa Do: 1791 - 3527 --nMapId =Phượng Tường Phủ
+--ID: Đường Môn Name:Quan Báo Danh Liên Server - Toa Do: 1786 - 3531 --nMapId =Phượng Tường Phủ
+--ID: Minh Giáo Name:Táo Quân - Toa Do: 1797 - 3538 --nMapId =Phượng Tường Phủ
+--ID:Chưa Name:Hạ Hầu Nguyên Thao - Toa Do: 1797 - 3520 --nMapId =Phượng Tường Phủ
+--ID: Đường Môn Name:Bao Vạn Đồng - Toa Do: 1793 - 3526 --nMapId =Phượng Tường Phủ
+--ID: Thiếu Lâm Name:Tượng của CanhYen - Toa Do: 1804 - 3493 --nMapId =Phượng Tường Phủ
+--ID:Đoàn Thị Name:Nhan Như Ngọc - Toa Do: 1808 - 3488 --nMapId =Phượng Tường Phủ
+--ID: Ngũ Độc Name:Thủ Khố - Toa Do: 1774 - 3531 --nMapId =Phượng Tường Phủ
+--ID: Đường Môn Name:Quân Sĩ Tây Hạ - Toa Do: 1675 - 2917 --nMapId =Gia Dụ Quan
+--ID:Chưa Name:Tông Môn Xa Phu - Toa Do: 1617 - 3763 --nMapId =
+--ID:Chưa Name:Tông Môn Xa Phu - Toa Do: 1617 - 3763 --nMapId =
+--ID:Chưa Name:Tông Môn Xa Phu - Toa Do: 1617 - 3763 --nMapId =
+--ID:Chưa Name:Tông Môn Xa Phu - Toa Do: 1617 - 3763 --nMapId =

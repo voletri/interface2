@@ -1,0 +1,38 @@
+
+local tbTimer = Ui.tbLogic.tbTimer;
+
+Ui.UI_PLAYERNAME_EX = "Ui.UI_PLAYERNAME_EX";
+local uiPlayerNameEx = Ui.tbWnd[UI_PLAYERNAME_EX] or {};
+
+uiPlayerNameEx.TIMER_FRAME	= Env.GAME_FPS;
+uiPlayerNameEx.nTimerId = 0;
+
+function uiPlayerNameEx:OnInit()
+	--print("uiPlayerNameEx:OnInit()");
+	self.EnterGame_bak	= self.EnterGame_bak or Ui.EnterGame;
+	function Ui:EnterGame()
+		--print("Ui:EnterGame()");
+		uiPlayerNameEx.EnterGame_bak(Ui);
+		uiPlayerNameEx.nTimerId = tbTimer:Register(uiPlayerNameEx.TIMER_FRAME, uiPlayerNameEx.OnTimer, uiPlayerNameEx);
+	end
+end
+
+function uiPlayerNameEx:OnTimer()
+	for _, pNpc in ipairs(KNpc.GetAroundNpcList(me, 90)) do
+		if (pNpc.nKind == 1 ) then	
+			local nFaction = (me.szName == pNpc.szName) and me.nFaction or pNpc.nFaction;
+			local szFactionName = Player.tbFactions[nFaction].szName;
+			if nFaction == Env.FACTION_ID_CUSTOM then
+				szFactionName = string.format("%s-%s", pNpc.szCustomFactionName, Env.SERIES_NAME[pNpc.nSeries]);
+			end
+			if pNpc.szName == me.szName then
+				pNpc.SetDisplayName(me.szName);
+			else
+				local szName = string.format("%s-%s", pNpc.szName, szFactionName);
+				pNpc.SetDisplayName(szName);
+			end
+		end
+	end
+end
+
+uiPlayerNameEx:OnInit();

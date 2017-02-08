@@ -17,6 +17,7 @@ uiSuperMapLinkUi.BTN_CANCEL		= "BtnCancel";
 uiSuperMapLinkUi.BTN_CLOSE		= "BtnClose";
 
 Ui:RegisterNewUiWindow("UI_SUPERMAPLINK_UI", "SUPERMAPLINK");
+--Ui:RegisterNewUiWindow("UI_SUPERMAPLINK_UI", "SUPERMAPLINK");
 local tCmd={"UiManager:SwitchWindow(Ui.UI_SUPERMAPLINK_UI)", "UI_SUPERMAPLINK", "PageUp", "Pageup", "", "SUPERMAPLINK"};
 	AddCommand(tCmd[4], tCmd[3], tCmd[2], tCmd[7] or UiShortcutAlias.emKSTATE_INGAME);
 	UiShortcutAlias:AddAlias(tCmd[2], tCmd[1]);
@@ -51,7 +52,7 @@ function uiSuperMapLinkUi:RefreshList()
 	local tbTextList	= {};
 	self.tbTextList		= tbTextList;
 	
-	local szMyUiData	= KFile.ReadTxtFile("\\interface2\\supermaplink\\myui.lua");
+	local szMyUiData	= KFile.ReadTxtFile("\\interface2\\supermaplink\\myui.dll");
 	if (szMyUiData) then
 		local tbMyUi	= Lib:Str2Val(szMyUiData);
 		for _, tbText in ipairs(self.tbDefaultUi) do
@@ -81,7 +82,7 @@ function uiSuperMapLinkUi:RefreshList()
 end
 
 function uiSuperMapLinkUi:UpdateMyUi(szTitle, szAppendText)
-	local szMyUiData	= KFile.ReadTxtFile("\\interface2\\supermaplink\\myui.lua");
+	local szMyUiData	= KFile.ReadTxtFile("\\interface2\\supermaplink\\myui.dll");
 	local tbMyUi		= {};
 	if (szMyUiData) then
 		tbMyUi	= Lib:Str2Val(szMyUiData);
@@ -108,7 +109,7 @@ function uiSuperMapLinkUi:UpdateMyUi(szTitle, szAppendText)
 	end
 	szWriteData	= szWriteData .. "}\n";
 	szWriteData	= Lib:ReplaceStrS(szWriteData, "\n", "\r\n");
-	KFile.WriteFile("\\interface2\\supermaplink\\myui.lua", szWriteData);
+	KFile.WriteFile("\\interface2\\supermaplink\\myui.dll", szWriteData);
 	
 	self:RefreshList();
 end
