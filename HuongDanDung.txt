@@ -2,7 +2,7 @@ Hướng dẫn = video : https://pluginwjx.blogspot.com/p/download.html
 
 * Vào thư mục chứa KT xóa 2 file interface2 + config.ini , sau đó chạy autoupdate.exe ,xong mới cài plugin vào
 * Khi down plugin về các bạn giải nén ra được 2 file interface2 và config.ini . Copy 2 file này vào thư mục chứa KT
-
+* Nếu không có file config.ini vào game ấn ESC->Thiết lập -> Plugin -> Dùng phần mềm thứ 3 -> out game
 Mọi chỉnh sửa trong game phải bằng NOTEPAD++
 
 

@@ -17,7 +17,7 @@ uiTeamPortrait.PO_WND = {
 	{"Member5_PoPo", "Member5_PoPo_Txt"},
 };
 
-uiTeamPortrait.IMG_PORTRAIT =
+uiTeamPortrait.IMG_PORTRAIT = 
 {
 	[0] = "image\\ui\\002a\\teamportrait\\icon_male.spr",
 	[1] = "image\\ui\\002a\\teamportrait\\icon_female.spr",
@@ -54,7 +54,7 @@ uiTeamPortrait.GetFactionShortName = function(self,nFact)
 	elseif nFact == 14 then
 		sRet = "TD"
 	else
-		sRet = nFact
+		sRet = "xx"
 	end
 	return sRet
 end
@@ -152,7 +152,7 @@ uiTeamPortrait.GetMemberBaseData = function(self)
 				Img_SetImage(self.UIGROUP, self.PORTRAIT_WND[i][6], 1, "");
 			end
 			Wnd_Show(self.UIGROUP, self.PORTRAIT_WND[i][1]);
-		else
+		else		
 			Txt_SetTxt(self.UIGROUP, self.PORTRAIT_WND[i][5], "");
 			Wnd_Hide(self.UIGROUP, self.PORTRAIT_WND[i][1]);
 		end
@@ -215,7 +215,7 @@ function uiTeamPortrait:UpdateMemberData(nZhenFaChange)
 				szName = "Chưa biết"
 			end
 			Wnd_SetTip(self.UIGROUP, self.PORTRAIT_WND[i][2], string.format("Cấp: %d; %s; %s", tbMember[i].nLevel, szFaction, szName));
-
+			
 			if tbMember[i].nOnline == 0 then
 				Txt_SetTxtColor(self.UIGROUP, self.PORTRAIT_WND[i][5], 0xc0c0c0);
 				Img_SetFrame(self.UIGROUP, self.PORTRAIT_WND[i][2], 1);
@@ -233,10 +233,10 @@ function uiTeamPortrait:UpdateMemberData(nZhenFaChange)
  			end
 		end
 	end
-
+	
 	local nMemberCount = #tbMember;
 	local tbZhenFa = me.GetZhenFaInfo();
-
+	
 	if (not tbZhenFa) then
 		Wnd_Hide(self.UIGROUP, self.ZHENFA_WND[1]);
 		return;
@@ -250,7 +250,7 @@ function uiTeamPortrait:UpdateMemberData(nZhenFaChange)
 		Wnd_SetPos(self.UIGROUP, self.ZHENFA_WND[1], 2, (nMemberCount + 1) * 34);
 		Img_SetImage(self.UIGROUP, self.ZHENFA_WND[1], 1, self.ZHENGFA_SPR[tbZhenFa.nLevel + 1]);
 		Wnd_Show(self.UIGROUP, self.ZHENFA_WND[1]);
-
+		
 		local nWidth1, nHeight1 = Wnd_GetSize(self.UIGROUP, self.ZHENFA_WND[1]);
 		local nWidth2, nHeight2 = Wnd_GetSize(self.UIGROUP, self.ZHENFA_WND[2]);
 		Wnd_SetPos(self.UIGROUP, self.ZHENFA_WND[2], 2 - (nHeight2 - nHeight1) / 2, (nMemberCount + 1) * 34 - (nWidth2 - nWidth1) / 2);
@@ -268,11 +268,11 @@ function uiTeamPortrait:OnPopUpMenu(szWnd,	nParam)
 				nPlayer = i;
 				break;
 			end
-		end
+		end	
 	end
 	if (nPlayer) then
 		local tbMember = me.GetTeamMemberInfo();
-		if tbMember[nPlayer].nOnline ~= 0 then						-- 如果在线者弹出菜单
+		if tbMember[nPlayer].nOnline ~= 0 then						-- 如果在线者弹出菜单             
 			local tbRelationList, _ = me.Relation_GetRelationList();
 			local bFriend, bTeamLeader = 0, 0;
 			if tbRelationList and tbRelationList[Player.emKPLAYERRELATION_TYPE_BIDFRIEND] then
@@ -283,21 +283,21 @@ function uiTeamPortrait:OnPopUpMenu(szWnd,	nParam)
 					end
 				end
 			end
-
-
+			
+			
 			if tbRelationList and tbRelationList[Player.emKPLAYERRELATION_TYPE_TMPFRIEND] then
 				local tbTmpFrined = tbRelationList[Player.emKPLAYERRELATION_TYPE_TMPFRIEND]; -- 判断是否是临时好友
-				for szPlayer, _ in pairs(tbTmpFrined) do
+				for szPlayer, _ in pairs(tbTmpFrined) do      			
 					if (tbMember[nPlayer].szName == szPlayer) then
 						bFriend = 1;                  									 -- 是自己临时好友
 					end
 				end
 			end
-
-
+			
+			
 			if (self:IsTeamLeader() == 1)  then
 					bTeamLeader = 1;								-- 自己不是队长
-			end
+			end 
 			self.tbMenuFun[9] = tbMember[nPlayer];					-- 被选中的玩家信息放入 第9项
 			if (bFriend == 0) and (bTeamLeader == 0) then			-- 显示加为好友, 不显示队长移交和踢出队伍
 				self.tbMenuFun[6] = {self.CmdAddFriend}
@@ -308,7 +308,7 @@ function uiTeamPortrait:OnPopUpMenu(szWnd,	nParam)
 					self.MENU_ITEM[4], 4,
 					self.MENU_ITEM[5], 5,
 					self.MENU_ITEM[6], 6
-				);
+				);	
 			end
 			if (bFriend == 0) and (bTeamLeader == 1) then			-- 显示加为好友, 显示队长移交和踢出队伍
 				self.tbMenuFun[6] = {self.CmdAddFriend}
@@ -323,7 +323,7 @@ function uiTeamPortrait:OnPopUpMenu(szWnd,	nParam)
 					self.MENU_ITEM[6], 6,
 					self.MENU_ITEM[7], 7,
 					self.MENU_ITEM[8], 8
-				);
+				);	
 			end
 			if (bFriend == 1) and (bTeamLeader == 0) then			-- 不显示加为好友, 不显示队长移交和踢出队伍
 				DisplayPopupMenu(self.UIGROUP, szWnd, 5, nParam,
@@ -332,7 +332,7 @@ function uiTeamPortrait:OnPopUpMenu(szWnd,	nParam)
 					self.MENU_ITEM[3], 3,
 					self.MENU_ITEM[4], 4,
 					self.MENU_ITEM[5], 5
-				);
+				);	
 			end
 			if (bFriend == 1) and (bTeamLeader == 1) then			-- 不显示加为好友, 显示队长移交和踢出队伍
 				self.tbMenuFun[6] = {self.CmdChangeLeader}
@@ -345,15 +345,15 @@ function uiTeamPortrait:OnPopUpMenu(szWnd,	nParam)
 					self.MENU_ITEM[5], 5,
 					self.MENU_ITEM[7], 6,
 					self.MENU_ITEM[8], 7
-				);
+				);	
 			end
 		end
 	end
-
+	
 end
 
 function uiTeamPortrait:RegisterEvent()
-	local tbRegEvent =
+	local tbRegEvent = 
 	{
 		{ UiNotify.emCOREEVENT_TEAM_MEMBER_CHANGED,	self.UpdateMemberData },
 	};
@@ -363,16 +363,16 @@ end
 function uiTeamPortrait:GetMemberTalk(szSendName, szMsg)
 	local tbMember = me.GetTeamMemberInfo();
 	local nNowTalk = 0;
-
+	
 	for i=1, #tbMember do
 		if tbMember[i].szName == szSendName then
 			nNowTalk = i;
 			break;
 		end
 	end
-
+	
 	if nNowTalk == 0 then return; end
-
+	
 	local szFirstChar = string.sub(szMsg, 1, 1);
 	if szFirstChar == "#" then
 		local szEmote = string.sub(szMsg, 2, -1);
@@ -381,22 +381,22 @@ function uiTeamPortrait:GetMemberTalk(szSendName, szMsg)
 			szMsg = szEscapedMsg;
 		end
 	end
-
+	
 	local szShowMsg = self:GetFormatMsg(szMsg);
-
+	
 	if tbMember[nNowTalk].nLeader == 1 then
 		Txt_SetTxt(self.UIGROUP, self.PO_WND[nNowTalk][2], "<color=orange>"..szShowMsg.."<color>");
 	else
 		Txt_SetTxt(self.UIGROUP, self.PO_WND[nNowTalk][2], "<color=white>"..szShowMsg.."<color>");
 	end;
-
+	
 	Wnd_Show(self.UIGROUP, self.PO_WND[nNowTalk][1]);
 	self.tbTalkTime[nNowTalk] = self.TIME_TALKPOPSHOWTIME;
 end
 
 function uiTeamPortrait:GetFormatMsg(szMsg)
 	local szRead, szShow	= "", "";
-
+	
 	local nByte = 0;
 	local szTempMsg 		= szMsg;
 	local nMsgLen			= string.len(szMsg);
@@ -406,7 +406,7 @@ function uiTeamPortrait:GetFormatMsg(szMsg)
 		local szRead		= string.sub(szTempMsg, nStart, nEnd);
 		local nByte			= string.byte(szRead);
 		local nSpcFlag		= 0;
-
+		
 		if nByte >= 128 then
 			nEnd = nEnd + 1;
 			szRead = string.sub(szTempMsg, nStart, nEnd);
@@ -425,7 +425,7 @@ function uiTeamPortrait:GetFormatMsg(szMsg)
 				szRead 	= string.sub(szTempMsg, nStart, nEnd);
 			end;
 		end;
-
+		
 		if (1 == nSpcFlag) then
 			szShow = szShow.."...";
 		else
@@ -433,8 +433,8 @@ function uiTeamPortrait:GetFormatMsg(szMsg)
 		end
 		nStart	= string.len(szRead) + 1;
 		nMsgLen = nMsgLen - string.len(szRead);
-		if nStart > string.len(szTempMsg) then
-			break;
+		if nStart > string.len(szTempMsg) then 
+			break; 
 		end;
 		szTempMsg = string.sub(szTempMsg, nStart);
 	end;
